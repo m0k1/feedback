@@ -46,7 +46,7 @@ def sha256_loop(secret,masterlen):
     del hash_3
     del h3
     return key
-    
+
 def sha512_loop(secret,masterlen):
     key = ''
     pad = ''
