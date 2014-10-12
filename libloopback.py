@@ -63,7 +63,7 @@ def sha512_loop(secret,masterlen):
     while len(key) <= masterlen:
         hash_3 = sha512.new(pad)
         h3 = hash_3.digest()
-        k += h3
+        key += h3
         pad = cypher(pad,h3)
     del hash_3
     del h3
