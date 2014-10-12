@@ -3,7 +3,7 @@ from Crypto.Hash import SHA256 as sha256
 from Crypto.Hash import SHA512 as sha512
 from libonetimepadcypher import cypher
 
-def md5loop(secret,masterlen):
+def md5_loop(secret,masterlen):
     key = ''
     pad = ''
     hash_1 = md5.new(secret)
@@ -24,7 +24,8 @@ def md5loop(secret,masterlen):
     del hash_3
     del h3
     return key
-def sha256loop(secret,masterlen):
+    
+def sha256_loop(secret,masterlen):
     key = ''
     pad = ''
     hash_1 = sha256.new(secret)
@@ -45,7 +46,8 @@ def sha256loop(secret,masterlen):
     del hash_3
     del h3
     return key
-def sha512loop(secret,masterlen):
+    
+def sha512_loop(secret,masterlen):
     key = ''
     pad = ''
     hash_1 = sha512.new(secret)
