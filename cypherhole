@@ -1,0 +1,53 @@
+#!/usr/bin/python2
+import optparse
+import sys
+from libonetimepadcypher import *
+
+def cypherhole():
+    usage = '[ * ] USAGE :: %prog [OPTIONS] --inputfile [FILENAME] --outputfile [FILENAME]'
+    parser = optparse.OptionParser(usage,version='%prog :: alpha')
+    parser.add_option('--loopback',action = 'store_true',dest = 'loopback_bool',help = 'Boolen variable for loopback using')
+    parser.add_option('--keyfile',action = 'store_true',dest = 'keyfile_bool',help = 'Boolen variable for keyfile using')
+    parser.add_option('--key-file',dest = 'keyfilename',metavar = "FILE",help = 'Keyfile path')
+    parser.add_option('--input-file',dest = 'inputfilename',metavar = "FILE",help = 'Inputfile path')
+    parser.add_option('--output-file',dest = 'outputfilename',metavar = "FILE",help = 'Outputfile path')
+    (options,args) = parser.parse_args()
+    inputfile = options.inputfilename
+    outputfile = options.outputfilename
+    keyfile = options.keyfilename
+    loopback_bool = options.loopback_bool
+    keyfile_bool = options.keyfile_bool
+    if loopback_bool == False:
+        if keyfile_bool == False:
+            print options.usage
+            sys.exit()
+        else:
+            if (inputfile or outputfile or keyfile) == None:
+                print options.usage
+                sys.exit()
+            else:
+                status = file_cypher_with_keyfile(inputfile,outputfile,keyfile)
+                if status == None:
+                    print '[ - ] ERROR :: Unable to open input, output or key file...'
+                elif status == False:
+                    print '[ - ] ERROR :: Key is not compatible with input file... [ len(inputfile) > len(key) ]'
+                else:
+                    print '[ + ] MSG :: Well done :)'
+                sys.exit()
+    else:
+        if (inputfile or outputfile) == None:
+            print options.usage
+            sys.exit()
+        else:
+            status = file_cypher_with_looback(inputfile,outputfile)
+            if status == None:
+                print '[ - ] ERROR :: Unable to open input or output file...'
+            elif status == False:
+                print '[ - ] ERROR :: Key is not compatible with input file... [ len(inputfile) > len(key) ]'
+            else:
+                print '[ + ] MSG :: Well done :)'
+                sys.exit()
+if __name__ == '__main__':
+    cypherhole()
+
+#EOF

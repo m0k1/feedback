@@ -7,6 +7,21 @@ from Crypto.Hash import SHA384 as sha384 # digest_size = 48
 from Crypto.Hash import SHA512 as sha512 # digest_size = 64
 from libonetimepadcypher import cypher
 
+def masterloop(passwd,masterlenght):
+    loop1 = sha512_loop(passwd,masterlenght)
+    del passwd
+    loop2 = sha384_loop(loop1,masterlenght)
+    del loop1
+    loop3 = sha256_loop(loop2,masterlenght)
+    del loop2
+    loop4 = sha1_loop(loop3,masterlenght)
+    del loop3
+    loop5 = ripemd_loop(loop4,masterlenght)
+    del loop4
+    loop6 = md5_loop(loop5,masterlenght)
+    del loop5
+    return loop6
+
 def md5_loop(secret,masterlen):
     key = ''
     pad = ''
@@ -160,3 +175,5 @@ def sha512_loop(secret,masterlen):
     del hash_3
     del h3
     return key
+
+#EOF

@@ -6,23 +6,8 @@ import optparse
 from libloopback import *
 from libonetimepadcypher import file_size
 
-def masterloop(passwd,masterlenght):
-    loop1 = sha512_loop(passwd,masterlenght)
-    del passwd
-    loop2 = sha384_loop(loop1,masterlenght)
-    del loop1
-    loop3 = sha256_loop(loop2,masterlenght)
-    del loop2
-    loop4 = sha1_loop(loop3,masterlenght)
-    del loop3
-    loop5 = ripemd_loop(loop4,masterlenght)
-    del loop4
-    loop6 = md5_loop(loop5,masterlenght)
-    del loop5
-    return loop6
-
 def password_prompt():
-    prompt = lambda: (getpass.getpass('[ * ] Password :: '), getpass.getpass('[ * ] Retype password :: '))
+    prompt = lambda: (getpass.getpass('[ * ] Password        :: '), getpass.getpass('[ * ] Retype password :: '))
     p1,p2 = prompt()
     while p1 != p2:
         print('\n[ - ] ERROR :: Passwords do not match. Try again...\n')
@@ -67,3 +52,5 @@ def loopback():
 
 if __name__ == '__main__':
     loopback()
+
+#EOF
