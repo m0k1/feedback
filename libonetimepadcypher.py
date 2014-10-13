@@ -10,7 +10,7 @@ def cypher(data,key):
     cyphertext = ''.join([chr(ord(x)^ord(y)) for x,y in zip(data,key)])
     return cyphertext
     
-def file_cypher_keyfile(inputfilename,outputfilename,keyfilename):
+def file_cypher_with_keyfile(inputfilename,outputfilename,keyfilename):
     try:
         inputfile = open(inputfilename,'r')
         outputfile = open(outputfilename,'w')

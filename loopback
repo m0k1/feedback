@@ -4,7 +4,7 @@ import sys
 import getpass
 import optparse
 from libloopback import *
-from libonetimepadcypher import file_size as file_size
+from libonetimepadcypher import file_size
 
 def masterloop(passwd,masterlenght):
     loop1 = sha512_loop(passwd,masterlenght)
