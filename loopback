@@ -1,0 +1,69 @@
+#!/usr/bin/python2
+
+import sys
+import getpass
+import optparse
+from libloopback import *
+from libonetimepadcypher import file_size as file_size
+
+def masterloop(passwd,masterlenght):
+    loop1 = sha512_loop(passwd,masterlenght)
+    del passwd
+    loop2 = sha384_loop(loop1,masterlenght)
+    del loop1
+    loop3 = sha256_loop(loop2,masterlenght)
+    del loop2
+    loop4 = sha1_loop(loop3,masterlenght)
+    del loop3
+    loop5 = ripemd_loop(loop4,masterlenght)
+    del loop4
+    loop6 = md5_loop(loop5,masterlenght)
+    del loop5
+    return loop6
+
+def password_prompt():
+    prompt = lambda: (getpass.getpass('[ * ] Password :: '), getpass.getpass('[ * ] Retype password :: '))
+    p1,p2 = prompt()
+    while p1 != p2:
+        print('\n[ - ] ERROR :: Passwords do not match. Try again...\n')
+        p1,p2 = prompt()
+    del p2
+    return p1
+
+def loop_by_file(filename):
+    openfile = open(filename,'r')
+    filesize = file_size(openfile)
+    openfile.close()
+    del openfile
+    password = password_prompt()
+    key = masterloop(password,filesize)
+    del password
+    sys.stdout.write(key)
+    sys.exit()
+
+def loop_by_bytes(bytes):
+    password = password_prompt()
+    key = masterloop(password,bytes)
+    del password
+    sys.stdout.write(key)
+    sys.exit()
+
+def loopback():
+    usage = '[ * ] USAGE :: %prog [OPTIONS]'
+    parser = optparse.OptionParser(usage,version='%prog :: alpha')
+    parser.add_option('--file',dest = 'filename',metavar = "FILE",help = 'Generate a symmetric key for current file')
+    parser.add_option('--bytes',dest = 'bytes_size',type = 'int',help = 'Generate a symmetric key in bytes')
+    (options,args) = parser.parse_args()
+    filename = options.filename
+    bytes_size = options.bytes_size
+    if filename == None:
+        if bytes_size == None:
+            parser.usage
+            sys.exit()
+        else:
+            loop_by_bytes(bytes_size)
+    else:
+        loop_by_file(filename)
+
+if __name__ == '__main__':
+    loopback()

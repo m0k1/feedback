@@ -1,4 +1,3 @@
-
 from Crypto.Hash import MD5 as md5 # digest_size = 16
 from Crypto.Hash import RIPEMD as ripemd # digest_size = 20
 from Crypto.Hash import SHA as sha1 # digest_size = 20
