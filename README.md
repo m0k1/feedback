@@ -5,7 +5,7 @@ Feedback - File encryption cryptosystem and symmetric key generator.
 
 Executables
 -----------
-loopback - Symmetric key generator
+loopback - Symmetric key generator\n
 cypherhole - Encrypter/Decrypter
 
 Libs
